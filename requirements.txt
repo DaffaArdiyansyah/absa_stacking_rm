@@ -4,6 +4,6 @@ pandas
 nltk
 scikit-learn
 Sastrawi
-joblib==1.4.2
+joblib
 requests
 bz2
