@@ -24,9 +24,9 @@ nltk.download('punkt')
 @st.cache_resource
 def load_models():
     return {
-        "KNN": joblib.load("multi_stacking_meta_knn.pkl"),
-        "SVM": joblib.load("multi_stacking_meta_linear.pkl"),
-        "Naive Bayes": joblib.load("multi_stacking_meta_nb.pkl")
+        "KNN": joblib.load("multi_stacking_meta_knn_compressed.pkl"),
+        "SVM": joblib.load("multi_stacking_meta_linear_compressed.pkl"),
+        "Naive Bayes": joblib.load("multi_stacking_meta_nb_compressed.pkl")
     }
 
 models = load_models()
