@@ -23,9 +23,9 @@ nltk.download('punkt')
 
 # ID File Google Drive untuk Model
 FILES = {
-    "KNN": "1AbCdEfGhIjKlmNoPqrStUvWxYz",  # Ganti dengan ID Google Drive untuk KNN
-    "SVM": "2BcDeFgHiJkLmNoPqrStUvWxYzA",  # Ganti dengan ID Google Drive untuk SVM
-    "Naive Bayes": "3CdEfGhIjKlmNoPqrStUvWxYzB"  # Ganti dengan ID Google Drive untuk Naive Bayes
+    "KNN": "11IMrIo1XNTI4ZNiaZk4hEzRrczRaeBTw",  # Ganti dengan ID Google Drive untuk KNN
+    "SVM": "1AQBE7AVGygTu49SzvljFNNdsGnozJjpx",  # Ganti dengan ID Google Drive untuk SVM
+    "Naive Bayes": "18iRs_Y8TWXOTUh08uPmPeK0DiLShQ9wd"  # Ganti dengan ID Google Drive untuk Naive Bayes
 }
 
 # Fungsi download file dari Google Drive
