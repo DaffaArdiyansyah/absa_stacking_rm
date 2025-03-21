@@ -8,6 +8,7 @@ from nltk.corpus import stopwords
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
+import bz2
 
 # Set halaman
 st.set_page_config(page_title="Analisis Sentimen Berbasis Aspek", layout="wide")
@@ -20,13 +21,18 @@ st.markdown("<h1 style='text-align: center;'>Metode Stacking Ensemble Learning</
 nltk.download('stopwords')
 nltk.download('punkt')
 
+# Fungsi untuk membaca file yang dikompresi `bz2`
+def load_compressed_model(filepath):
+    with bz2.BZ2File(filepath, "rb") as f:
+        return joblib.load(f)
+
 # Load model meta learning
 @st.cache_resource
 def load_models():
     return {
-        "KNN": joblib.load("multi_stacking_meta_knn_compressed.pkl"),
-        "SVM": joblib.load("multi_stacking_meta_linear_compressed.pkl"),
-        "Naive Bayes": joblib.load("multi_stacking_meta_nb_compressed.pkl")
+        "KNN": load_compressed_model("multi_stacking_meta_knn_compressed.pkl.bz2"),
+        "SVM": load_compressed_model("multi_stacking_meta_linear_compressed.pkl.bz2"),
+        "Naive Bayes": load_compressed_model("multi_stacking_meta_nb_compressed.pkl.bz2"),
     }
 
 models = load_models()
