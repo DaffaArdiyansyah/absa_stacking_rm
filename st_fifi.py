@@ -1,5 +1,4 @@
 import streamlit as st
-import gdown # type: ignore
 import joblib
 import pandas as pd
 import re
@@ -8,7 +7,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from sklearn.feature_extraction.text import TfidfVectorizer
-import os
+import numpy as np
 
 # Set halaman
 st.set_page_config(page_title="Analisis Sentimen Berbasis Aspek", layout="wide")
@@ -21,29 +20,18 @@ st.markdown("<h1 style='text-align: center;'>Metode Stacking Ensemble Learning</
 nltk.download('stopwords')
 nltk.download('punkt')
 
-# ID File Google Drive untuk Model
-FILES = {
-    "KNN": "11IMrIo1XNTI4ZNiaZk4hEzRrczRaeBTw",  # Ganti dengan ID Google Drive untuk KNN
-    "SVM": "1AQBE7AVGygTu49SzvljFNNdsGnozJjpx",  # Ganti dengan ID Google Drive untuk SVM
-    "Naive Bayes": "18iRs_Y8TWXOTUh08uPmPeK0DiLShQ9wd"  # Ganti dengan ID Google Drive untuk Naive Bayes
-}
-
-# Fungsi download file dari Google Drive
-@st.cache_resource
-def download_model(file_id, output):
-    if not os.path.exists(output):
-        with st.spinner(f"Mengunduh {output} dari Google Drive..."):
-            gdown.download(f"https://drive.google.com/uc?id={file_id}", output, quiet=False)
-    return joblib.load(output)
-
 # Load model meta learning
 @st.cache_resource
 def load_models():
-    return {model: download_model(FILES[model], f"{model.lower().replace(' ', '_')}.pkl") for model in FILES}
+    return {
+        "KNN": joblib.load("multi_stacking_meta_knn.pkl"),
+        "SVM": joblib.load("multi_stacking_meta_linear.pkl"),
+        "Naive Bayes": joblib.load("multi_stacking_meta_nb.pkl")
+    }
 
 models = load_models()
 
-# Load TF-IDF Vectorizer langsung dari file lokal
+# Load TF-IDF Vectorizer
 vectorizer = joblib.load("tfidf_vectorizer.pkl")
 
 # Load kamus normalisasi
@@ -61,6 +49,7 @@ def clean_text(text):
     text = re.sub(r'[^a-zA-Z\s]', '', text)
     text = re.sub(r'\s+', ' ', text).strip()
     return text
+
 
 def preprocess_text(text):
     text = clean_text(text)
