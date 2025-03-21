@@ -6,3 +6,4 @@ scikit-learn
 Sastrawi
 joblib==1.4.2
 requests
+bz2
